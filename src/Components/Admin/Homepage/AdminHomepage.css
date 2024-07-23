@@ -1,0 +1,88 @@
+.home-page {
+  max-width: 1600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Home Header Styles */
+
+.home-header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Features Styles */
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 40px 0; 
+}
+
+.feature {
+  flex-basis: calc(33.33% - 20px);
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.feature p {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.feature button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.feature button:hover {
+  background-color: #444;
+}
+
+/* Media Queries for Responsiveness */
+
+@media (max-width: 768px) {
+  .home-page {
+    max-width: 90%; /* reduced max-width for smaller screens */
+  }
+  .feature {
+    flex-basis: calc(50% - 20px); /* updated flex-basis for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page {
+    max-width: 80%; /* reduced max-width for even smaller screens */
+  }
+  .feature {
+    flex-basis: 100%; /* updated flex-basis for smallest screens */
+  }
+}

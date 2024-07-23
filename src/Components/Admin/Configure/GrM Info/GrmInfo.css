@@ -1,0 +1,20 @@
+.grm-info {
+    font-size: 12px;
+}
+.grm-info .add-grm{
+    border: 1px solid rgb(148, 148, 148);
+    border-radius: 8px;
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.grm-info .grm-table {
+    border: 1px solid rgb(148, 148, 148);
+    border-radius: 8px;
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    margin-top: 10px;
+}

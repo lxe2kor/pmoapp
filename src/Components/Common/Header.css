@@ -1,0 +1,31 @@
+.headerbg
+{
+    background-image: url('../../Images/headerbg.svg');
+    height: 10px;
+}
+
+.admin-nav-item {
+    font-weight: 600;
+}
+
+.admin-item {
+    margin-left: 20px;
+}
+
+.admin-header {
+    font-size: 14px;
+}
+
+.admin-header .active-link {
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+.user-header .active-link {
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+.user-header {
+    font-size: 14px;
+}
