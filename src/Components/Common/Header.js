@@ -42,6 +42,9 @@ function Header()
                             !isHomePage && <Button variant="danger" onClick={handleLogout}>Logout <FaRightFromBracket/></Button>
                         }
                     </Container>
+                    {
+                        !isHomePage ? <h6>Powered by EEM-PJ1-VV</h6> : <h6>Powered by EEM-PJ1-VV</h6>
+                    }
                 </Navbar>              
             </React.Fragment>
         </div>

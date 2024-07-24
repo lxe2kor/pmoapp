@@ -14,7 +14,7 @@ function ResourceGroup() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://10.164.151.171:7000/api/fetchBmResourceGroup');
+                const response = await axios.get('http://10.187.61.41:7000/api/fetchBmResourceGroup');
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -27,7 +27,7 @@ function ResourceGroup() {
         const addData = {
             bmnumber: bmNumber, rgid: rgId, rgd: rgd
         }
-        await axios.post('http://10.164.151.171:7000/api/saveResourceGroup', addData)
+        await axios.post('http://10.187.61.41:7000/api/saveResourceGroup', addData)
         .then(response => {
             if(response.data){
                 alert("GrM information saved successfully");
@@ -58,7 +58,7 @@ function ResourceGroup() {
     const handleEditFormSubmit = async (e) => {
         e.preventDefault();
         
-        await axios.put(`http://10.164.151.171:7000/api/updateResourceGroup/${editForm.id}`, editForm)
+        await axios.put(`http://10.187.61.41:7000/api/updateResourceGroup/${editForm.id}`, editForm)
             .then(response => {
                 setData((prevData) => 
                     prevData.map((item) => (item.id === editForm.id ? editForm : item))
@@ -76,7 +76,7 @@ function ResourceGroup() {
 
     const handleDelete = async (id) => {
         if(window.confirm("Are you sure you want to delete data?")) {
-            await axios.delete(`http://10.164.151.171:7000/api/deleteResourceGroup/${id}`)
+            await axios.delete(`http://10.187.61.41:7000/api/deleteResourceGroup/${id}`)
             .then(response => {
                 setData((prevData) => prevData.filter((item) => item.id !== id));
                 alert("Deleted data successfully!");

@@ -20,7 +20,7 @@ function NonMcrBilling() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:7000/api/group')
+        axios.get('http://10.187.61.41:7000/api/group')
           .then(response => {
             setDepartment(response.data);
           })
@@ -29,7 +29,7 @@ function NonMcrBilling() {
           });
 
         if (selectedDept) {
-            axios.get(`http://localhost:7000/api/team?group=${selectedDept}`)
+            axios.get(`http://10.187.61.41:7000/api/team?group=${selectedDept}`)
               .then(response => {
                 setGroups(response.data);
               })
@@ -41,7 +41,7 @@ function NonMcrBilling() {
 
     useEffect(() => {
         if (groupSelected) {
-            axios.get(`http://localhost:7000/api/deptAssociates?team=${groupSelected}`)
+            axios.get(`http://10.187.61.41:7000/api/deptAssociates?team=${groupSelected}`)
               .then(response => {
                 setAssociates(response.data);
               })
@@ -53,7 +53,7 @@ function NonMcrBilling() {
 
     const handleClick = async () => {
         try {
-            const response = await axios.get("http://localhost:7000/api/fetchNonMcrData", {
+            const response = await axios.get("http://10.187.61.41:7000/api/fetchNonMcrData", {
                 params: {
                     team: groupSelected
                 }
@@ -148,7 +148,7 @@ function NonMcrBilling() {
             const confirmDelete = window.confirm("This row exists in the database. Are you sure you want to delete it?");
             if (confirmDelete) {
                 try {
-                    await axios.delete(`http://localhost:7000/api/deletenonmcrbilling1/${rowToDelete.id}`);
+                    await axios.delete(`http://10.187.61.41:7000/api/deletenonmcrbilling1/${rowToDelete.id}`);
                     newData.splice(index, 1);
                     setData(newData);
                     alert('Row deleted successfully');
@@ -174,7 +174,7 @@ function NonMcrBilling() {
                 if (selectedOption) {
                     const selectedAssociate = associates.find(assoc => assoc.value === value);
                     if (selectedAssociate) {
-                        const response = await axios.get('http://localhost:7000/api/remainingNonMcrHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
+                        const response = await axios.get('http://10.187.61.41:7000/api/remainingNonMcrHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
                         const remainingHours = response.data.remainingHours;
 
                         newData[index].employeename = selectedAssociate.label;
@@ -216,8 +216,8 @@ function NonMcrBilling() {
                     console.log('Row Data:', rowData);
 
                     return row.isNew
-                        ? axios.post('http://localhost:7000/api/addnonmcrbilling1', { rowData, groupSelected })
-                        : axios.put(`http://localhost:7000/api/updatenonmcrbilling1/${row.id}`, rowData);
+                        ? axios.post('http://10.187.61.41:7000/api/addnonmcrbilling1', { rowData, groupSelected })
+                        : axios.put(`http://10.187.61.41:7000/api/updatenonmcrbilling1/${row.id}`, rowData);
                 })
             );
             alert('Changes saved successfully');

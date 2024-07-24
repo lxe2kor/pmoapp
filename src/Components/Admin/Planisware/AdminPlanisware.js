@@ -43,7 +43,7 @@ function AdminPlanisware()
         console.log(upload);
         try {
             if(upload === "UploadMCR") {
-                const response = await axios.post('http://10.164.151.171:7000/api/mcrupload', formData);
+                const response = await axios.post('http://10.187.61.41:7000/api/mcrupload', formData);
                 const { success } = response.data;
                 if(success){
                     setMessage('Excel file uploaded and data has been saved!');
@@ -51,7 +51,7 @@ function AdminPlanisware()
                 }
             }
             else if(upload === "UploadPlanisware"){
-                const response = await axios.post('http://10.164.151.171:7000/api/planiswareupload', formData);
+                const response = await axios.post('http://10.187.61.41:7000/api/planiswareupload', formData);
                 const { success } = response.data;
                 if(success){
                     setMessage('Excel file uploaded and data has been saved!');

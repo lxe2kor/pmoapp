@@ -21,6 +21,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Test from './Components/Admin/MCRBilling/Test';
 import { AdminProvider } from './AdminContext';
 import { UserProvider } from './UserContext';
+import UserRegister from './Components/LoginPage/UserRegister';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route exact path='/McrBilling' element={<ProtectedRoute adminOnly><McrBilling/></ProtectedRoute>} />
             <Route exact path='/NonMcrBilling' element={<ProtectedRoute adminOnly><NonMcrBilling/></ProtectedRoute>}/>
             <Route exact path='/McrStatus' element={<ProtectedRoute adminOnly><McrStatus/></ProtectedRoute>}/>
+            <Route exact path='/UserRegister' element={<ProtectedRoute adminOnly><UserRegister/></ProtectedRoute>}/>
             <Route exact path='/Register' element={<Register/>} />
             <Route exact path='/UserHome' element={<ProtectedRoute userOnly><UserHomepage/></ProtectedRoute>} />
             <Route exact path='/UserMcrBilling' element={<ProtectedRoute userOnly><UserMcrBilling/></ProtectedRoute>}/>

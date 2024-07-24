@@ -51,9 +51,11 @@ function AdminHeader() {
                                 {
                                     !isHomePage && <Button variant="danger" size="sm" onClick={handleLogout}>Logout <FaRightFromBracket /></Button>
                                 }
+                                
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
+                    <h6>Powered by EEM-PJ1-VV</h6>
                 </Navbar>
             </div>
         </React.Fragment>

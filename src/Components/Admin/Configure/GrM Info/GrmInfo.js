@@ -13,7 +13,7 @@ function GrmInfo() {
     const [editForm, setEditForm] = useState({});
 
     useEffect(() => {
-        axios.get('http://10.164.151.171:7000/api/fetchGrmData')
+        axios.get('http://10.187.61.41:7000/api/fetchGrmData')
         .then(response => {
             setGrmData(response.data);
         })
@@ -28,7 +28,7 @@ function GrmInfo() {
             grmemail: grmEmail,
             grm_dept: grmDept
         }
-        await axios.post('http://10.164.151.171:7000/api/saveGrmData', addData)
+        await axios.post('http://10.187.61.41:7000/api/saveGrmData', addData)
         .then(response => {
             if(response.data){
                 alert("GrM information saved successfully");
@@ -58,7 +58,7 @@ function GrmInfo() {
 
     const handleEditFormSubmit = async (e) => {
         e.preventDefault();
-        await axios.put(`http://10.164.151.171:7000/api/updateGrmInfo/${editForm.grmid}`, editForm)
+        await axios.put(`http://10.187.61.41:7000/api/updateGrmInfo/${editForm.grmid}`, editForm)
             .then(response => {
                 setGrmData((prevData) => 
                     prevData.map((item) => (item.grmid === editForm.grmid ? editForm : item))
@@ -76,7 +76,7 @@ function GrmInfo() {
 
     const handleDelete = async (grmid) => {
         if(window.confirm("Are you sure you want to delete data?")) {
-            await axios.delete(`http://10.164.151.171:7000/api/deleteGrm/${grmid}`)
+            await axios.delete(`http://10.187.61.41:7000/api/deleteGrm/${grmid}`)
             .then(response => {
                 setGrmData((prevData) => prevData.filter((item) => item.grmid !== grmid));
                 alert("Deleted data successfully!");

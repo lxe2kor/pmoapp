@@ -10,6 +10,7 @@ function UserNonMcrBilling() {
     const { user } = useContext(UserContext);
     const department = user.department;
     const group = user.group;
+    const username = user.username;
     const today = new Date();
     const currentMonth = today.toLocaleString('default', { month: 'short' }).toUpperCase();
 
@@ -21,7 +22,7 @@ function UserNonMcrBilling() {
 
     useEffect(() => {
         if (group) {
-            axios.get(`http://localhost:7000/api/deptAssociates?team=${group}`)
+            axios.get(`http://10.187.61.41:7000/api/deptAssociates?team=${group}`)
               .then(response => {
                 setAssociates(response.data);
               })
@@ -32,9 +33,10 @@ function UserNonMcrBilling() {
     }, [group]);
 
     useEffect(() => {
-        axios.get("http://localhost:7000/api/fetchNonMcrData", {
+        axios.get("http://10.187.61.41:7000/api/fetchNonMcrData1", {
             params: {
-                team: group
+                team: group,
+                username 
             }
         })
         .then(response => {
@@ -64,7 +66,7 @@ function UserNonMcrBilling() {
         .catch(error => {
             console.error('Error fetching teams:', error);
         });
-    }, [group]);
+    }, [group, username]);
 
     const handleSortByMonth = () => {
         const sortedData = [...data].sort((a, b) => {
@@ -128,7 +130,7 @@ function UserNonMcrBilling() {
             const confirmDelete = window.confirm("This row exists in the database. Are you sure you want to delete it?");
             if (confirmDelete) {
                 try {
-                    await axios.delete(`http://localhost:7000/api/deletenonmcrbilling1/${rowToDelete.id}`);
+                    await axios.delete(`http://10.187.61.41:7000/api/deletenonmcrbilling2/${rowToDelete.id}?username=${username}`);
                     newData.splice(index, 1);
                     setData(newData);
                     alert('Row deleted successfully');
@@ -154,7 +156,7 @@ function UserNonMcrBilling() {
                 if (selectedOption) {
                     const selectedAssociate = associates.find(assoc => assoc.value === value);
                     if (selectedAssociate) {
-                        const response = await axios.get('http://localhost:7000/api/remainingNonMcrHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
+                        const response = await axios.get('http://10.187.61.41:7000/api/remainingNonMcrHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
                         const remainingHours = response.data.remainingHours;
 
                         newData[index].employeename = selectedAssociate.label;
@@ -196,8 +198,8 @@ function UserNonMcrBilling() {
                     console.log('Row Data:', rowData);
 
                     return row.isNew
-                        ? axios.post('http://localhost:7000/api/addnonmcrbilling1', { rowData, group })
-                        : axios.put(`http://localhost:7000/api/updatenonmcrbilling1/${row.id}`, rowData);
+                        ? axios.post('http://10.187.61.41:7000/api/addnonmcrbilling2', { rowData, group, username })
+                        : axios.put(`http://10.187.61.41:7000/api/updatenonmcrbilling2/${row.id}`, { rowData, username });
                 })
             );
             alert('Changes saved successfully');

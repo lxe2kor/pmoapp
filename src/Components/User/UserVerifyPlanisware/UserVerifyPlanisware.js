@@ -16,7 +16,7 @@ function UserVerifyPlanisware() {
     const [grmEmail, setGrmEmail] = useState('');
 
     useEffect(() => {
-        axios.get('http://10.164.151.171:7000/api/group')
+        axios.get('http://10.187.61.41:7000/api/group')
         .then(response => {
             setGroups(response.data);
         })
@@ -24,7 +24,7 @@ function UserVerifyPlanisware() {
             console.error('Error fetching groups:', error);
         });
         if(groupSelected){
-            axios.get(`http://10.164.151.171:7000/api/team?group=${groupSelected}`)
+            axios.get(`http://10.187.61.41:7000/api/team?group=${groupSelected}`)
             .then(response => {
                 setTeams(response.data);
             })
@@ -39,7 +39,7 @@ function UserVerifyPlanisware() {
 
     const handleSubmit = async() => {
         if(teamSelected) {
-            await axios.get("http://10.164.151.171:7000/api/verifyplanisware", {
+            await axios.get("http://10.187.61.41:7000/api/verifyplanisware", {
                 params: {
                     team: teamSelected, 
                     month: month
@@ -52,7 +52,7 @@ function UserVerifyPlanisware() {
                 console.error('Error fetching teams:', err);
             });
 
-            await axios.get("http://10.164.151.171:7000/api/notallocated", {
+            await axios.get("http://10.187.61.41:7000/api/notallocated", {
                 params: {
                     team: teamSelected, 
                     month: month
@@ -66,7 +66,7 @@ function UserVerifyPlanisware() {
             });
         }
         else if(!teamSelected){
-            await axios.get("http://10.164.151.171:7000/api/fetchallteams", {
+            await axios.get("http://10.187.61.41:7000/api/fetchallteams", {
                 params: {
                     group: groupSelected,
                     month: month
@@ -79,7 +79,7 @@ function UserVerifyPlanisware() {
                 console.error('Error fetching teams:', err);
             });
 
-            await axios.get("http://10.164.151.171:7000/api/fetchnotallocated", {
+            await axios.get("http://10.187.61.41:7000/api/fetchnotallocated", {
                 params: {
                     group: groupSelected, 
                     month: month
@@ -94,7 +94,7 @@ function UserVerifyPlanisware() {
         }
 
         try {
-            const res = await axios.get("http://10.164.151.171:7000/api/getGrmDetails", {
+            const res = await axios.get("http://10.187.61.41:7000/api/getGrmDetails", {
                 params: {
                     grm_dept: groupSelected
                 }

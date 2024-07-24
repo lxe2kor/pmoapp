@@ -11,7 +11,7 @@ function Register() {
     axios.defaults.withCredentials = true;
     const register = async () => {
         console.log(usernameReg + passwordReg);
-        await axios.post("http://localhost:7000/api/register", {
+        await axios.post("http://10.187.61.41:7000/api/register", {
         username: usernameReg,
         password: passwordReg,
         }).then((response) => {

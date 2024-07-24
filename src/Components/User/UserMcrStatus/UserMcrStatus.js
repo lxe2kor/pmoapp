@@ -18,7 +18,7 @@ function UserMcrStatus() {
 
     const handleSubmit = async () => {
         if(month === 'All'){
-            axios.get('http://localhost:7000/api/fetchAllButGT', {
+            axios.get('http://10.187.61.41:7000/api/fetchAllButGT', {
                 params: {
                     cgroup: department,
                     cteam: group,
@@ -34,7 +34,7 @@ function UserMcrStatus() {
                 console.error('Error fetching all data', error);
             })
         } else if(month !== 'All'){
-            axios.get('http://localhost:7000/api/fetchAllButGTM', {
+            axios.get('http://10.187.61.41:7000/api/fetchAllButGTM', {
                 params: {
                     cgroup: department,
                     cteam: group,

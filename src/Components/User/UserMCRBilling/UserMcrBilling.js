@@ -9,6 +9,7 @@ import { UserContext } from '../../../UserContext';
 function UserMcrBilling() {
     const { user } = useContext(UserContext);
     const group = user.group;
+    const username = user.username;
     const today = new Date();
     const currentMonth = today.toLocaleString('default', { month: 'short' }).toUpperCase();
     console.log(user.group);
@@ -22,7 +23,7 @@ function UserMcrBilling() {
 
     useEffect(() => {
         if (group) {
-            axios.get(`http://localhost:7000/api/deptAssociates?team=${group}`)
+            axios.get(`http://10.187.61.41:7000/api/deptAssociates?team=${group}`)
               .then(response => {
                 setAssociates(response.data);
               })
@@ -33,14 +34,15 @@ function UserMcrBilling() {
     }, [group]);
 
     useEffect(() => {
-        axios.get("http://localhost:7000/api/fetchmcrbilling", {
+        axios.get("http://10.187.61.41:7000/api/fetchmcrbilling1", {
             params: {
-                team: group
+                team: group,
+                username
             }
         })
         .then(async (response) => {
             const fetchedData = await Promise.all(response.data.map(async (item) => {
-                const rgdResponse = await axios.get('http://localhost:7000/api/rgdOptions', { params: { bmnumber: item.bmnumber } });
+                const rgdResponse = await axios.get('http://10.187.61.41:7000/api/rgdOptions', { params: { bmnumber: item.bmnumber } });
                 return { ...item, rgdOptions: rgdResponse.data, isNew: false, isModified: false };
             }));
             setData(fetchedData);
@@ -48,7 +50,7 @@ function UserMcrBilling() {
         .catch(err => {
             console.error('Error fetching teams:', err);
         });
-    }, [group]);
+    }, [group, username]);
 
     const handleSortByMonth = () => {
         const sortedData = [...data].sort((a, b) => {
@@ -108,7 +110,7 @@ function UserMcrBilling() {
             const confirmDelete = window.confirm("This row exists in the database. Are you sure you want to delete it?");
             if (confirmDelete) {
                 try {
-                    await axios.delete(`http://localhost:7000/api/deletemcrbilling1/${rowToDelete.id}`);
+                    await axios.delete(`http://10.187.61.41:7000/api/deletemcrbilling2/${rowToDelete.id}?username=${username}`);
                     newData.splice(index, 1);
                     setData(newData);
                     alert('Row deleted successfully');
@@ -131,13 +133,13 @@ function UserMcrBilling() {
 
         if (field === 'bmnumber' && value) {
             try {
-                const response = await axios.get('http://localhost:7000/api/detailsByBmNumber', { params: { bmnumber: value } });
+                const response = await axios.get('http://10.187.61.41:7000/api/detailsByBmNumber', { params: { bmnumber: value } });
                 const details = response.data;
                 newData[index].wstatus = details.mcr_id_status || '';
                 newData[index].pd = details.project_division || '';
                 newData[index].pbu = details.project_business_unit || '';
 
-                const rgdResponse = await axios.get('http://localhost:7000/api/rgdOptions', { params: { bmnumber: value } });
+                const rgdResponse = await axios.get('http://10.187.61.41:7000/api/rgdOptions', { params: { bmnumber: value } });
                 newData[index].rgdOptions = rgdResponse.data;
                 newData[index].rgd = details.resource_group_description || newData[index].rgd;
             } catch (error) {
@@ -147,7 +149,7 @@ function UserMcrBilling() {
 
         if (field === 'rgd' && value) {
             try {
-                const response = await axios.get('http://localhost:7000/api/rgidByRgd', { params: { rgd: value } });
+                const response = await axios.get('http://10.187.61.41:7000/api/rgidByRgd', { params: { rgd: value } });
                 newData[index].rgid = response.data.resource_group_id;
             } catch (error) {
                 console.error('Error fetching rgid by rgd:', error);
@@ -159,7 +161,7 @@ function UserMcrBilling() {
                 if (selectedOption) {
                     const selectedAssociate = associates.find(assoc => assoc.value === value);
                     if (selectedAssociate) {
-                        const response = await axios.get('http://localhost:7000/api/remainingHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
+                        const response = await axios.get('http://10.187.61.41:7000/api/remainingHours', { params: { empno: selectedAssociate.value, pmo_month: newData[index].pmo_month } });
                         const remainingHours = response.data.remainingHours;
 
                         newData[index].associatename = selectedAssociate.label;
@@ -200,8 +202,8 @@ function UserMcrBilling() {
                     }
 
                     return row.isNew
-                        ? axios.post('http://localhost:7000/api/addmcrbilling1', { rowData, group })
-                        : axios.put(`http://localhost:7000/api/updatemcrbilling1/${row.id}`, rowData);
+                        ? axios.post('http://10.187.61.41:7000/api/addmcrbilling2', { rowData, group, username })
+                        : axios.put(`http://10.187.61.41:7000/api/updatemcrbilling2/${row.id}`, { rowData, username });
                 })
             );
             alert('Changes saved successfully');
@@ -219,9 +221,9 @@ function UserMcrBilling() {
         const bmNumbers = pasteData.split('\n').map(bm => bm.trim()).filter(bm => bm);
 
         const newRows = await Promise.all(bmNumbers.map(async (bm) => {
-            const response = await axios.get('http://localhost:7000/api/detailsByBmNumber', { params: { bmnumber: bm } });
+            const response = await axios.get('http://10.187.61.41:7000/api/detailsByBmNumber', { params: { bmnumber: bm } });
             const details = response.data;
-            const rgdResponse = await axios.get('http://localhost:7000/api/rgdOptions', { params: { bmnumber: bm } });
+            const rgdResponse = await axios.get('http://10.187.61.41:7000/api/rgdOptions', { params: { bmnumber: bm } });
             const rgdOptions = rgdResponse.data;
 
             return {

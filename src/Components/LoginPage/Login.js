@@ -22,7 +22,7 @@ function Login() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://localhost:7000/api/group')
+        axios.get('http://10.187.61.41:7000/api/group')
           .then(response => {
             setDepartment(response.data);
           })
@@ -31,7 +31,7 @@ function Login() {
           });
 
         if (selectedDept) {
-            axios.get(`http://localhost:7000/api/team?group=${selectedDept}`)
+            axios.get(`http://10.187.61.41:7000/api/team?group=${selectedDept}`)
               .then(response => {
                 setGroups(response.data);
               })
@@ -46,7 +46,7 @@ function Login() {
         const userToken = localStorage.getItem("userToken");
 
         if (adminToken) {
-            axios.get("http://localhost:7000/api/protectedRoute", {
+            axios.get("http://10.187.61.41:7000/api/protectedRoute", {
                 headers: { "x-access-token": adminToken }
             }).then((response) => {
                 if (response.data.success) {
@@ -60,7 +60,7 @@ function Login() {
         }
 
         if (userToken) {
-            axios.get("http://localhost:7000/api/protectedRoute", {
+            axios.get("http://10.187.61.41:7000/api/protectedRoute", {
                 headers: { "x-access-token": userToken }
             }).then((response) => {
                 if (response.data.success) {
@@ -77,7 +77,7 @@ function Login() {
     const login = (event) => {
         event.preventDefault();
         if (logintype === 'Admin') {
-            axios.post("http://localhost:7000/api/adminLogin", {
+            axios.post("http://10.187.61.41:7000/api/adminLogin", {
                 username,
                 password,
             }).then((response) => {
@@ -93,10 +93,10 @@ function Login() {
                 setErrorMessage('An error occurred during login');
             });
         } else if (logintype === 'User') {
-            axios.post("http://localhost:7000/api/userLogin", {
+            axios.post("http://10.187.61.41:7000/api/userLogin", {
                 username,
-                department: selectedDept,
-                group: groupSelected
+                pmodepartment: selectedDept,
+                pmogroup: groupSelected
             }).then((response) => {
                 if (response.data.auth) {
                     localStorage.setItem("userToken", response.data.token);

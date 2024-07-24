@@ -27,10 +27,10 @@ function McrGroupSetup() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const groupResponse = await axios.get('http://10.164.151.171:7000/api/group');
+                const groupResponse = await axios.get('http://10.187.61.41:7000/api/group');
                 setGroups(groupResponse.data);
                 if(groupSelected){
-                    const teamResponse = await axios.get(`http://10.164.151.171:7000/api/team?group=${groupSelected}`);
+                    const teamResponse = await axios.get(`http://10.187.61.41:7000/api/team?group=${groupSelected}`);
                     setTeams(teamResponse.data);
                 } else {
                     setTeams([]);
@@ -63,7 +63,7 @@ function McrGroupSetup() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.get("http://10.164.151.171:7000/api/getAssociateData", {
+            const response = await axios.get("http://10.187.61.41:7000/api/getAssociateData", {
                 params: {
                     team: teamSelected
                 }
@@ -74,7 +74,7 @@ function McrGroupSetup() {
         }
 
         try {
-            const res = await axios.get("http://10.164.151.171:7000/api/getGrmDetails", {
+            const res = await axios.get("http://10.187.61.41:7000/api/getGrmDetails", {
                 params: {
                     grm_dept: groupSelected
                 }
@@ -96,7 +96,7 @@ function McrGroupSetup() {
                     employee_team: teamSelected,
                     associates: associateData
                 };
-                const response = await axios.post('http://10.164.151.171:7000/api/addAssociates', dataToSend);
+                const response = await axios.post('http://10.187.61.41:7000/api/addAssociates', dataToSend);
                 if (response.data) {
                     alert('Data added successfully');
                     handleSubmit();
@@ -127,7 +127,7 @@ function McrGroupSetup() {
                 employee_id: editForm.employee_id,
                 employee_status: editForm.employee_status
             };
-            await axios.put(`http://10.164.151.171:7000/api/updateAssociates/${editItem.id}`, updatedItem);
+            await axios.put(`http://10.187.61.41:7000/api/updateAssociates/${editItem.id}`, updatedItem);
             setData((prevData) => 
                 prevData.map((item) => (item.id === editItem.id ? updatedItem : item))
             );
@@ -145,7 +145,7 @@ function McrGroupSetup() {
     const handleAssociateDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete data?")) {
             try {
-                await axios.delete(`http://10.164.151.171:7000/api/deleteAssociates/${id}`);
+                await axios.delete(`http://10.187.61.41:7000/api/deleteAssociates/${id}`);
                 setData((prevData) => prevData.filter((item) => item.id !== id));
                 alert("Deleted data successfully!");
             } catch (error) {
@@ -163,7 +163,7 @@ function McrGroupSetup() {
         };
         if (teamSelected && associateName && empId) {
             try {
-                const response = await axios.post('http://10.164.151.171:7000/api/addAssociates', dataToSend);
+                const response = await axios.post('http://10.187.61.41:7000/api/addAssociates', dataToSend);
                 if (response.data) {
                     alert('Data added successfully');
                     handleSubmit();
@@ -184,7 +184,7 @@ function McrGroupSetup() {
     const handleAddTeam = async () => {
         if (newTeam && newGroup) {
             try {
-                const response = await axios.post('http://10.164.151.171:7000/api/addGroupTeam', { groupName: newGroup, teamName: newTeam, grm: grmName });
+                const response = await axios.post('http://10.187.61.41:7000/api/addGroupTeam', { groupName: newGroup, teamName: newTeam, grm: grmName });
                 if (response.data) {
                     alert('New data added successfully');
                     setTeams([...response.data, { cteam: newTeam }]);

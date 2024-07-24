@@ -23,8 +23,8 @@ function McrStatus() {
         const fetchData = async () => {
             try {
                 const [groupResponse, allTeamsResponse] = await Promise.all([
-                    axios.get('http://localhost:7000/api/group'),
-                    axios.get('http://localhost:7000/api/allTeam')
+                    axios.get('http://10.187.61.41:7000/api/group'),
+                    axios.get('http://10.187.61.41:7000/api/allTeam')
                 ]);
                 setGroups(groupResponse.data);
                 setAllTeams(allTeamsResponse.data);
@@ -37,7 +37,7 @@ function McrStatus() {
 
     useEffect(() => {
         if (groupSelected !== 'All') {
-            axios.get(`http://localhost:7000/api/team?group=${groupSelected}`)
+            axios.get(`http://10.187.61.41:7000/api/team?group=${groupSelected}`)
                 .then(response => {
                     setTeams(response.data);
                 })
@@ -51,29 +51,29 @@ function McrStatus() {
 
     const handleSubmit = async () => {
         try {
-            let fetchUrl = 'http://localhost:7000/api/fetchAllStatus';
+            let fetchUrl = 'http://10.187.61.41:7000/api/fetchAllStatus';
             let fetchParams = { dataSelected };
 
             if (groupSelected === 'All' && teamSelected === 'All' && month !== 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButMonth';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButMonth';
                 fetchParams = { pmomonth: month, dataSelected };
             } else if (groupSelected === 'All' && teamSelected !== 'All' && month === 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButTeam';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButTeam';
                 fetchParams = { cteam: teamSelected, dataSelected };
             } else if (groupSelected !== 'All' && teamSelected === 'All' && month === 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButGroup';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButGroup';
                 fetchParams = { cgroup: groupSelected, dataSelected };
             } else if (groupSelected !== 'All' && teamSelected !== 'All' && month === 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButGT';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButGT';
                 fetchParams = { cgroup: groupSelected, cteam: teamSelected, dataSelected };
             } else if (groupSelected !== 'All' && teamSelected === 'All' && month !== 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButGM';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButGM';
                 fetchParams = { cgroup: groupSelected, pmomonth: month, dataSelected };
             } else if (groupSelected === 'All' && teamSelected !== 'All' && month !== 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButTM';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButTM';
                 fetchParams = { cteam: teamSelected, pmomonth: month, dataSelected };
             } else if (groupSelected !== 'All' && teamSelected !== 'All' && month !== 'All') {
-                fetchUrl = 'http://localhost:7000/api/fetchAllButGTM';
+                fetchUrl = 'http://10.187.61.41:7000/api/fetchAllButGTM';
                 fetchParams = { cgroup: groupSelected, cteam: teamSelected, pmomonth: month, dataSelected };
             }
 
@@ -82,7 +82,7 @@ function McrStatus() {
             setResult2(response.data.query2Result);
             setSubmit(true);
 
-            const grmResponse = await axios.get("http://localhost:7000/api/getGrmDetails", {
+            const grmResponse = await axios.get("http://10.187.61.41:7000/api/getGrmDetails", {
                 params: { grm_dept: groupSelected }
             });
             if (grmResponse.data) {
